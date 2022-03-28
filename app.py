@@ -5,7 +5,6 @@
 # packages
 from flask import Flask
 from flask import render_template
-from flask import render_template_string
 from flask import request
 from flask import redirect
 import csv
@@ -14,7 +13,7 @@ import json
 # create web app's instance
 app = Flask('__name__')
 
-# read data from CSV
+# Homepage
 @app.route('/')
 def readhome():
 
