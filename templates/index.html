@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
+    <style media="screen">
+        #list {
+                display: none;
+              }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- CRUD operations -->
+        <div class="col">
+            <!-- <a class="btn btn-danger mt-5" href="/create">Delete</a> -->
+        </div>
+
+        <!-- CSV data -->
+        <table id="tabel-data" class="table table-striped mt-2 data" style="width: 100%; border: 1px solid black">
+            <thead>
+                <tr class="bg-primary text-white">
+                    {% for header in data[0].keys() %}
+                    <th scope="col">
+                        {% if header == list(data[0].keys())[0] %}
+                        <a class="btn btn-outline-light" href="/kota/{{str(id)}}/create?fields={{str(list(data[0].keys()))}}"
+                            style="margin-right: 5px;">+</a>
+                        {% endif%}
+                        {{ header}}
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in range(0, len(data)) %}
+                <tr id="{{row}}">
+                    {% for col in range(0, len(list(data[row].values()))) %}
+                    <td style="word-break:break-all;">
+                        {% if col == 0 %}
+                        <a class="btn btn-outline-danger" href="kota/{{str(id)}}/delete?id={{row}}" style="margin-right: 5px;">x</a>
+                        <a href="kota/{{str(id)}}/update?id={{row}}">{{ list(data[row].values())[col] }}</a>
+                        {% else %}
+                        {{ list(data[row].values())[col] }}
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor%}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tabel-data').DataTable();
+    });
+</script>
+
+</html>
